@@ -17,8 +17,7 @@ use function is_array;
 final readonly class TelegramChannel implements NotificationChannelInterface
 {
     public function __construct(
-        private TelegramBotRegistry
-    $bots,
+        private TelegramBotRegistry $bots,
     ) {
     }
 
