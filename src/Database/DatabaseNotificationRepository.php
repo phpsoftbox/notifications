@@ -51,7 +51,21 @@ final readonly class DatabaseNotificationRepository
         $limit = $limit > 0 ? $limit : 5;
 
         $sql = sprintf(
-            'SELECT id, user_id, type, title, body, data, read_datetime, created_datetime FROM %s WHERE user_id = :user_id ORDER BY created_datetime DESC LIMIT %d',
+            '
+                SELECT
+                    id,
+                    user_id,
+                    type,
+                    title,
+                    body,
+                    data,
+                    read_datetime,
+                    created_datetime
+                FROM %s
+                WHERE user_id = :user_id
+                ORDER BY created_datetime DESC
+                LIMIT %d
+            ',
             $this->connection->table($this->table),
             $limit,
         );
@@ -74,7 +88,13 @@ final readonly class DatabaseNotificationRepository
     public function markRead(int $id): int
     {
         $sql = sprintf(
-            'UPDATE %s SET read_datetime = CURRENT_TIMESTAMP, updated_datetime = CURRENT_TIMESTAMP WHERE id = :id',
+            '
+                UPDATE %s
+                SET
+                    read_datetime = CURRENT_TIMESTAMP,
+                    updated_datetime = CURRENT_TIMESTAMP
+                WHERE id = :id
+            ',
             $this->connection->table($this->table),
         );
 
@@ -84,7 +104,14 @@ final readonly class DatabaseNotificationRepository
     public function markReadForUser(int $id, int $userId): int
     {
         $sql = sprintf(
-            'UPDATE %s SET read_datetime = CURRENT_TIMESTAMP, updated_datetime = CURRENT_TIMESTAMP WHERE id = :id AND user_id = :user_id',
+            '
+                UPDATE %s
+                SET
+                    read_datetime = CURRENT_TIMESTAMP,
+                    updated_datetime = CURRENT_TIMESTAMP
+                WHERE id = :id
+                    AND user_id = :user_id
+            ',
             $this->connection->table($this->table),
         );
 
@@ -94,7 +121,14 @@ final readonly class DatabaseNotificationRepository
     public function markAllRead(int $userId): int
     {
         $sql = sprintf(
-            'UPDATE %s SET read_datetime = CURRENT_TIMESTAMP, updated_datetime = CURRENT_TIMESTAMP WHERE user_id = :user_id AND read_datetime IS NULL',
+            '
+                UPDATE %s
+                SET
+                    read_datetime = CURRENT_TIMESTAMP,
+                    updated_datetime = CURRENT_TIMESTAMP
+                WHERE user_id = :user_id
+                    AND read_datetime IS NULL
+            ',
             $this->connection->table($this->table),
         );
 
