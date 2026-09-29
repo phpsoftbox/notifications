@@ -17,8 +17,7 @@ use function max;
 final readonly class NotificationPruneHandler implements HandlerInterface
 {
     public function __construct(
-        private DatabaseNotificationRepository
-    $repository,
+        private DatabaseNotificationRepository $repository,
     ) {
     }
 
