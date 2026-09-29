@@ -15,8 +15,21 @@ use function trim;
 use const ENT_QUOTES;
 use const ENT_SUBSTITUTE;
 
-final class MarkdownToHtmlConverter implements MarkdownToHtmlConverterInterface
+/**
+ * Markdown → HTML для писем. С установленным `erusev/parsedown` использует его, иначе — минимальный встроенный
+ * конвертер (экранирование HTML, `**жирный**`, `*курсив*`, переводы строк).
+ *
+ * По умолчанию сырой HTML в Markdown экранируется, а ссылки `javascript:` и т. п. обезвреживаются (safe mode
+ * Parsedown): в Markdown-шаблон часто подставляются пользовательские данные без экранирования.
+ * `allowRawHtml: true` — только для полностью доверенного Markdown.
+ */
+final readonly class MarkdownToHtmlConverter implements MarkdownToHtmlConverterInterface
 {
+    public function __construct(
+        private bool $allowRawHtml = false,
+    ) {
+    }
+
     public function convert(string $markdown): string
     {
         $markdown = trim($markdown);
@@ -25,8 +38,9 @@ final class MarkdownToHtmlConverter implements MarkdownToHtmlConverterInterface
         }
 
         if (class_exists('Parsedown')) {
-            /** @var object $parser */
             $parser = new Parsedown();
+
+            $parser->setSafeMode(!$this->allowRawHtml);
 
             return $parser->text($markdown);
         }

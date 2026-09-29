@@ -14,19 +14,27 @@
     },
     "require": {
         "php": "^8.5",
-        "phpsoftbox/collection": "dev-master",
+        "phpsoftbox/cli-app": "dev-master",
         "phpsoftbox/code-generator": "dev-master",
+        "phpsoftbox/collection": "dev-master",
         "phpsoftbox/view": "dev-master",
         "psr/log": "^3.0"
     },
     "require-dev": {
+        "erusev/parsedown": "^1.7",
         "phpsoftbox/broadcaster": "dev-master",
-        "phpsoftbox/cli-app": "dev-master",
         "phpsoftbox/cs-fixer": "^1.2.1",
         "phpsoftbox/database": "dev-master",
         "phpsoftbox/mailer": "dev-master",
         "phpsoftbox/telegram": "dev-master",
         "phpunit/phpunit": "^13.3"
+    },
+    "suggest": {
+        "erusev/parsedown": "Markdown to HTML in MarkdownToHtmlConverter (otherwise a minimal built-in converter is used).",
+        "phpsoftbox/broadcaster": "Pushr channel (PushrPublisherAdapter).",
+        "phpsoftbox/database": "Database channel, DatabaseNotificationRepository and notifications:prune.",
+        "phpsoftbox/mailer": "Email channel (EmailChannel, EmailMessage).",
+        "phpsoftbox/telegram": "Telegram channel."
     },
     "autoload": {
         "psr-4": {

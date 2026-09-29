@@ -99,6 +99,15 @@ $transport = new SmtpEmailTransport($smtp);
 $emailChannel = new EmailChannel($transport, null, null, 'no-reply@example.com');
 ```
 
+Каналы с внешними зависимостями подключаются пакетами из `suggest`: `phpsoftbox/mailer` (email),
+`phpsoftbox/telegram`, `phpsoftbox/broadcaster` (Pushr), `phpsoftbox/database` (database-канал и
+`notifications:prune`), `erusev/parsedown` (Markdown).
+
+`MarkdownToHtmlConverter` по умолчанию экранирует сырой HTML в Markdown и обезвреживает ссылки `javascript:`
+(safe mode Parsedown): в Markdown-шаблон обычно подставляются данные без экранирования. Для полностью доверенного
+Markdown — `new MarkdownToHtmlConverter(allowRawHtml: true)`. В HTML-шаблонах (`.phtml`) и layout данные
+экранирует сам шаблон (`html()`/`htmlspecialchars`), в том числе `title`, который канал подставляет из темы письма.
+
 Поддерживаются шаблоны (через `PhpSoftBox\View\ViewRendererInterface`) и Markdown-конвертация (`MarkdownToHtmlConverterInterface`):
 
 ```php
